@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-function AddArticles(){
+function AddNews(){
     const [title, setTitle] = useState("");
     const [email, setEmail] = useState("");
     const [content, setContent] = useState("");
@@ -31,14 +31,13 @@ function AddArticles(){
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log({title,loginemail, content, image});
-        const url = "https://localhost:7160/api/Article/AddArticle";
+        const url = "https://localhost:7160/api/News/AddNews";
 
         const data ={
             Title : title,
             Email : loginemail,
             Content : content,
-            Image : "dummy.jpg",
-            Type  : isAdmin ? "Admin" : "User"
+            IsActive : 1
         }
 
         axios.post(url,data)
@@ -47,7 +46,7 @@ function AddArticles(){
             const dt = results.data;
             alert(dt.statusMessage);
             if(dt.statusCode === 200){
-                navigate("/articles");
+                navigate("/news");
             }
         }).catch((error)=>{
             console.log(error);
@@ -56,7 +55,7 @@ function AddArticles(){
     };
 
     const handleCancel = () => {
-        navigate("/articles");
+        navigate("/news");
     };
 
     return(
@@ -69,7 +68,7 @@ function AddArticles(){
                             <div className="card-header bg-primary text-white">
                                 <h3 className="mb-0">
                                     <i className="fas fa-newspaper me-2"></i>
-                                    Add New Article
+                                    Add New News
                                 </h3>
                             </div>
                             <div className="card-body p-4">
@@ -113,22 +112,7 @@ function AddArticles(){
                                     </div>
 
                                     {/* Image Upload */}
-                                    <div className="mb-4">
-                                        <label htmlFor="articleImage" className="form-label fw-bold">
-                                            Upload Image
-                                        </label>
-                                        <input
-                                            type="file"
-                                            className="form-control"
-                                            id="articleImage"
-                                            accept="image/*"
-                                            onChange={(e) => setImage(e.target.files[0])}
-                                        />
-                                        <small className="text-muted">
-                                            Accepted formats: JPG, PNG, GIF (Max 5MB)
-                                        </small>
-                                    </div>
-
+                                   
                                     {/* Buttons */}
                                     <div className="d-flex justify-content-end gap-2">
                                         <button
@@ -144,7 +128,7 @@ function AddArticles(){
                                             className="btn btn-primary btn-lg px-4"
                                         >
                                             <i className="fas fa-check me-2"></i>
-                                            Submit Article
+                                            Submit New
                                         </button>
                                     </div>
                                 </form>
@@ -156,4 +140,4 @@ function AddArticles(){
         </div>
     )
 }
-export default AddArticles;
+export default AddNews;
